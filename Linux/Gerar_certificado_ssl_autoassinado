@@ -1,0 +1,86 @@
+Certificados Ssl Auto-Assinados
+
+Objectivo
+Para estabelecer uma ligação segura e de confiança é necessário gerar certificados que atestem a identidade do servidor. Esses certificados são geralmente emitidos por entidades certificadoras (Certificate Authority) independentes e de confiança reconhecida. No entanto, para uma utilização mais caseira e económica, é possível criar um certificado “auto-assinado”.
+
+Instalação
+root@server:~# aptitude install openssl ca-certificates
+Geração dos certificados
+A geração de um certificado SSL requer os seguintes passos: primeiro é gerada uma chave privada; em seguida esta é usada para gerar um pedido de certificação (Certificate Signing Request (CSR)). O pedido de certificação é então enviado para a entidade certificadora (Certificate Authority (CA)) que devolve o certificado assinado. Este último passo pode ser feito pelo próprio, gerando assim um certificado auto-assinado (Self-signed Certificate).
+
+Criar uma directoria de trabalho:
+
+root@server:~# mkdir certs
+root@server:~# cd certs
+root@server:~/certs#
+Chave privada
+Gerar a chave privada (Private Key) encriptada:
+
+root@server:~/certs# openssl genrsa -des3 -out server.key 2048
+Generating RSA private key, 2048 bit long modulus
+.................+++
+................+++
+e is 65537 (0x10001)
+Enter pass phrase for server.key:
+Verifying - Enter pass phrase for server.key:
+Chave privada sem password
+A chave privada está encriptada e protegida por uma password, o que implica que se escreva a password cada vez que um serviço necessita da chave. Como solução, é possível gerar uma versão da chave sem a protecção da password:
+
+root@server:~/certs# openssl rsa -in server.key -out server.key.insecure
+Enter pass phrase for server.key:
+writing RSA key
+Esta chave sem password, deve ser guardada com especial cuidado e, nomeadamente, só deve ser acessível pelo utilizador root:
+
+root@server:~/certs# chmod 600 server.key.insecure
+Pedido de certificação
+Gerar o pedido de certificação (Certificate Signing Request), no campo Common Name deverá ser indicado o nome do servidor para o qual está a ser gerado o certificado. Caso se pretenda um certificado para vários servidores no mesmo domínio pode-se usar a sintaxe *.home.lan:
+
+root@server:~/certs# openssl req -new -key server.key -out server.csr
+Enter pass phrase for server.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:PT
+State or Province Name (full name) [Some-State]:Portugal
+Locality Name (eg, city) []:
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Home Lan
+Organizational Unit Name (eg, section) []:
+Common Name (eg, YOUR name) []:*.home.lan
+Email Address []:
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+Certificado auto-assinado
+O pedido de certificado deveria ser enviado para a entidade certificadora, que devolveria o certificado assinado. Neste caso, será usado para criar um certificado auto-assinado (Self-Signed Certificate), válido por 365 dias:
+
+root@server:~/certs# openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+Signature ok
+subject=/C=PT/ST=Portugal/O=Home Lan/CN=*.home.lan
+Getting Private key
+Enter pass phrase for server.key:
+O processo de criação dos certificados está concluído. No final foram gerados os seguintes ficheiros:
+
+Ficheiro	Descrição
+server.key	A chave privada
+server.key.insecure	A chave privada sem password
+server.csr	O pedido de assinatura do certificação
+server.crt	O certificado auto-assinado.
+O certificado auto-assinado é válido por 365 dias. No entanto, este pode ser renovado em qualquer altura, bastando para tal regenerar o certificado auto-assinado.
+
+Instalação da chave privada e certificado auto-assinado
+Finalmente, copiar as chaves privadas para /etc/ssl/private e o certificado para /etc/ssl/certs:
+
+root@server:~/certs# cp server.key server.key.insecure /etc/ssl/private/
+root@server:~/certs# cp server.crt /etc/ssl/certs/
+O certificado auto-assinado está pronto a usar.
+
+Sendo o certificado auto-assinado, ou seja, não estando assinado por uma entidade certificada, a sua utilização dará sempre origem a um aviso por parte da aplicação cliente.
+
+Fonte: https://servidordebian.org/pt/squeeze/intranet/ssl_cert/self_signed 
+
