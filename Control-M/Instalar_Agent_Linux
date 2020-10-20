@@ -1,0 +1,136 @@
+------------ INSTALAÇÂO Control-M: DRKAI.9.0.00_Linux-x86_64.tar.Z
+
+mkdir -p /incontrol/ag800/
+groupadd controlm
+useradd -g controlm -s /bin/bash -c " Control-M Agent " -d /incontrol/ag800 ag800
+cd /incontrol/ag800/
+chown -R ag800:controlm /incontrol
+
+wget http://backup.sky.local/downloads/controlm/Agent/DRKAI.9.0.00_Linux-x86_64.tar.Z
+tar -xvf DRKAI.9.0.00_Linux-x86_64.tar.Z
+
+visudo
+## Incluir as linhas abaixo no final do arquivo:
+ag800 ALL=(ALL) NOPASSWD: /incontrol/ag800/ctm/scripts/start-ag
+ag800 ALL=(ALL) NOPASSWD: /incontrol/ag800/ctm/scripts/shut-ag
+ag800 ALL=(ALL) NOPASSWD: /incontrol/ag800/PA*_INSTALL.BIN
+
+./setup.sh
+y
+Press <Enter> to continue or <S> to skip: s
+
+Do you accept and agree to the terms of this Software License Agreement (Y/N)?y
+
+=== Control-M/Agent 9.0.00 Installation ===
+
+
+=== Product Settings : Control-M/Agent parameters ===
+
+
+1 : Primary Control-M/Server host:
+
+2 : Authorized Control-M/Server hosts:
+
+3 : Agent-to-Server port number: 7005
+
+4 : Server-to-Agent port number: 7006
+
+
+== <C> Cancel <P> Previous Panel <N>/<Enter> Next Panel ==
+
+Enter command or item number you wish to change:
+
+
+1
+brcscm01
+2
+brcscm01
+
+Enter command or item number you wish to change:n
+
+=== Control-M/Agent 9.0.00 Installation ===
+
+
+=== Summary ===
+
+
+You are about to install Control-M/Agent version 9.0.00
+
+Destination Folder: /incontrol/ag800
+
+Primary Control-M/Server Host: brcscm01
+
+Control-M/Server Hosts: brcscm01
+
+Agent To Server Port: 7005
+
+Server To Agent Port: 7006
+
+Agent will be started as: Root
+
+== <C> Cancel <P> Previous Panel <I>/<Enter> Install <G> Generate an automatic installation configuration file ==
+
+Enter command:
+
+ENTER
+
+
+#Installation has completed successfully.
+
+[root@lxcprd01osmm01 ag800]# ps -ef | grep p_ctm
+root 29039 1 0 16:22 pts/1 00:00:00 /incontrol/ag800/ctm/exe/p_ctmag
+root 29093 1 0 16:22 pts/1 00:00:00 /incontrol/ag800/ctm/exe/p_ctmat
+root 29095 29093 0 16:22 pts/1 00:00:00 /incontrol/ag800/ctm/exe/p_ctmatw -ATW_NAME ATW000
+root 29404 27950 0 16:26 pts/1 00:00:00 grep --color=auto p_ctm
+[root@lxcprd01osmm01 ag800]#
+
+
+sudo su - ag800
+
+-bash-4.2$ cd /incontrol/ag800/
+-bash-4.2$ ag_diag_comm
+
+2020-04-27 16:38:39
+
+This procedure runs for about 30 seconds. Please wait
+
+Control-M/Agent Communication Diagnostic Report
+-----------------------------------------------
+
+Agent User Name : ag800
+Agent Directory : /incontrol/ag800/ctm
+Agent Platform Architecture : Linux
+Agent Version : 9.0.00.000
+Agent Host Name : lxcprd01obdt01
+Logical Agent Name : lxcprd01obdt01.sky.local
+Listen to Network Interface : *ANY
+Server Host Name : brcscm01
+Authorized Servers Host Names : brcscm01
+Server-to-Agent Port Number : 7006
+Agent-to-Server Port Number : 7005
+Server-Agent Protocol Version : 11
+Server-Agent Comm. Protocol : TCP
+Server-Agent Connection mode : Transient
+Unix Ping to Server Platform : Succeeded
+Agent Ping to Control-M/Server : Succeeded
+
+Agent processes status
+======================
+Agent Listener : Running as root (11834)
+Agent Tracker : Running as root (11888)
+Agent Tracker-Worker : Running as root (11890)
+
+-bash-4.2$
+
+Conteudo Extra - para consulta:
+Agent - 9.0.00.400
+http://brcscm03:18081/instalacoes/Agent_900/DRKAI.9.0.00_Linux-x86_64.tar.Z
+Fix Pack .400
+http://brcscm03:18081/instalacoes/Agent_900/FIX_PACK/PAKAI.9.0.00.400_Linux-x86_64_INSTALL.BIN
+
+MFT - 9.0.00.105
+http://brcscm03:18081/instalacoes/CM_MFT_AFT/Instalador_MFT/DRAFP.9.0.00_Linux-x86_64.zip
+Fix Pack .105
+http://brcscm03:18081/instalacoes/CM_MFT_AFT/Fix_Pack/PAAFP.9.0.00.105_unix.z
+
+------------
