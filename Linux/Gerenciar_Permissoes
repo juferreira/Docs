@@ -1,0 +1,27 @@
+===============================
+--------------- Adicionando usuários a grupos no Linux 
+2. Também podemos adicionar um usuário a um grupo usando o comando gpasswd:
+# gpasswd -a usuário grupo
+
+3. Podemos definir um novo grupo primário para o usuário com o comando usermod seguido da opção -g. Por exemplo, vamos trocar o grupo primário da monica (que é “monica”) para grupo engenheiros:
+# usermod -g engenheiros monica
+
+Verifique se o usuário foi adicionado a um grupo usando o comando groups seguido do nome do usuário:
+$ groups monica
+
+Para saber os usuários que estão no grupo:
+# sudo groups nomedogrupo
+
+Fonte: http://www.bosontreinamentos.com.br/linux/certificacao-lpic-1/como-adicionar-um-usuario-a-um-grupo-no-linux-via-terminal/
+===============================
+
+
+===============================
+--------------- Permissão no SUDOERS: 
+A linha abaixo no /etc/sudoers da permissão para o grupo GG_GA_DEVOPS_SO_ADM full no user jenkins
+%GG_GA_DEVOPS_SO_ADM    ALL=(jenkins:jenkins) NOPASSWD:ALL
+%GG_GA_DEVOPS_SO_ADM    ALL=(nexus:wheel) NOPASSWD:ALL
+%GG_GA_DEVOPS_SO_ADM    ALL=(sonaruser:wheel) NOPASSWD:ALL
+Já a linha abaixo permite que o user ag800 execute o comando do diretorio como root 
+ag800           ALL=(ALL) NOPASSWD: /incontrol/ag800/PA*_INSTALL.BIN
+===============================
