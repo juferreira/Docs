@@ -1,0 +1,43 @@
+Incluir LDAP:
+
+$ yum install adcli
+$ yum install oddjob-mkhomedir-0.31.5-4.el7.x86_64
+$ yum install sssd
+$ yum install samba-common-tools
+$ yum install pam_krb5-2.4.8-6.el7.x86_64
+$ yum install samba-common-tools sssd-ad
+$ yum install ksh
+
+
+
+CASO NECESSÁRIO:
+$ chown root:root /home/opc/ldap/*
+
+
+
+$ chown root <arquivo>
+$ chgrp root <arquivo>
+
+$ mv /etc/nsswitch.conf /etc/nsswitch.conf.bkp
+$ mv /home/opc/ldap/nsswitch.conf /etc/nsswitch.conf
+
+$ mv /etc/sssd/sssd.conf /etc/sssd/sssd.conf.bkp
+$ mv /home/opc/ldap/sssd.conf /etc/sssd/sssd.conf
+
+$ mv /etc/krb5.conf /etc/krb5.conf.bkp
+$ mv /home/opc/ldap/krb5.conf /etc/krb5.conf
+
+$ mv /etc/samba/smb.conf /etc/samba/smb.conf.bkp
+$ mv /home/opc/ldap/smb.conf /etc/samba/smb.conf
+
+$ chmod 400 /etc/sssd/sssd.conf
+
+$ systemctl enable sssd
+$ net ads join -k -U 10497
+$ authconfig --update --enablesssd --enablesssdauth --enablemkhomedir --disableldapauth
+
+$ systemctl restart sssd
+
+/etc/ssh/sshd_config - Alterar o parâmetro “PasswordAuthentication no” para “PasswordAuthentication yes” /etc/ssh/sshd_config
+
+$ systemctl restart sshd
