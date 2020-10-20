@@ -84,3 +84,5 @@ Para finalizar, digite o seguinte comando no servidor:
 Se ele se conectar sem pedir senha, significa que está tudo certo.
 
 Esta configuração é bastante usada na criação de Clusters.
+
+Fonte: [Viva o Linux](https://www.vivaolinux.com.br/dica/Relacao-de-confianca-entre-maquinas-atraves-do-servico-SSH)
