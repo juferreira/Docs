@@ -1,0 +1,37 @@
+--------------- Instalar Módulos Control-M
+Módulo de Backup:
+wget http://backup.sky.local/downloads/controlm/Backup/DRBKP.8.0.00_Linux-x86_64.tar.Z
+Módulo + Fix AFT:
+wget http://backup.sky.local/downloads/controlm/File_Transfer/DRAFT.8.0.00_Linux-x86_64.tar.Z
+wget http://backup.sky.local/downloads/controlm/File_Transfer/PAAFT.8.0.00.100_Linux-x86_64_INSTALL.BIN
+
+mv DRAFT.8.0.00_Linux-x86_64.tar.Z /incontrol/ag800/
+mv PAAFT.8.0.00.100_Linux-x86_64_INSTALL.BIN /incontrol/ag800/
+cd /incontrol/ag800/
+tar -xvf DRAFT.8.0.00_Linux-x86_64.tar.Z
+chmod 777 PAAFT.8.0.00.100_Linux-x86_64_INSTALL.BIN
+
+su - ag800
+cd /incontrol/ag800/
+sudo -l
+sudo /incontrol/ag800/ctm/scripts/shut-ag
+<Enter>
+<Enter>
+2020-04-08 15:48:35 Tracker process stopped
+./setup.sh
+<Y>
+<S>
+<Y>
+<Enter>
+=== Installation Result - Success ===
+
+ls -la
+./PAAFT.8.0.00.100_Linux-x86_64_INSTALL.BIN
+<Y>
+Control-M for Advanced File Transfer 8.0.00 Fix Pack 1 installation completed successfully.
+sudo /incontrol/ag800/ctm/scripts/start-ag
+<Enter>
+<Enter>
+Control-M/Agent started successfully.
+
+==========================
