@@ -1,0 +1,14 @@
+========================== 
+---------------  Listar e desisnstalar pacote Oracle Linux
+Por exemplo, para localizar o rpm de desenvolvimento do XWindows System experimente:
+
+# rpm -qa |more XFree
+XFree86-3.3.1-14
+XFree86-75dpi-fonts-3.3.1-14
+XFree86-devel-3.3.1-14
+XFree86-libs-3.3.1-14
+
+Neste caso, XFree86-devel é o nome do pacote que você precisa. Para remover o pacote digite:
+
+# rpm -e XFree86-devel
+==========================
