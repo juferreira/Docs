@@ -1,0 +1,25 @@
+
+========================== 
+---------------  Comand not found ao tentar executar um shell script bash
+run chmod +x testscript.sh
+Iniciar script com: 
+#!/bin/bash
+========================== 
+
+========================== 
+---------------  Declarando variaves no shell script 
+# Declarações CORRETAS
+tamanho_calca_42="Mentira nem uso 42"
+nome="Jefferson"
+_Esta_e_minha_rua="Rua pedro dos santos"
+NumeroDaMinhaCasa="102"
+CPF_E_RG="CPF: xxxxxxxx-xxxxxx.xx RG: y.yyy.yyyy"
+
+# Declarações ERRADAS
+*Nom&="Paula"
+1nome="Fernanda"
+rua-do-cabra="Pedrino nicolau"
+linguagem=favorita="Shell"
+MEU PINTINHO AMARELINHO="Vish isso não vai dar certo"
+==========================
+
