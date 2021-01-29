@@ -1,0 +1,67 @@
+20.2. SETTING ACCESS ACLS
+
+
+
+There are two types of ACLs: access ACLs and default ACLs. An access ACL is the access control list for a specific file or directory. A default ACL can only be associated with a directory; if a file within the directory does not have an access ACL, it uses the rules of the default ACL for the directory. Default ACLs are optional.
+ACLs can be configured:
+
+
+	
+	Per user
+	
+	
+	Per group
+	
+	
+	Via the effective rights mask
+	
+	
+	For users not in the user group for the file
+	
+
+
+The setfacl utility sets ACLs for files and directories. Use the -m option to add or modify the ACL of a file or directory:
+
+# setfacl -m rules files
+
+Rules (rules) must be specified in the following formats. Multiple rules can be specified in the same command if they are separated by commas.
+
+
+	u:uid:perms
+	
+	Sets the access ACL for a user. The user name or UID may be specified. The user may be any valid user on the system.
+	
+	g:gid:perms
+	
+	Sets the access ACL for a group. The group name or GID may be specified. The group may be any valid group on the system.
+	
+	m:perms
+	
+	Sets the effective rights mask. The mask is the union of all permissions of the owning group and all of the user and group entries.
+	
+	o:perms
+	
+	Sets the access ACL for users other than the ones in the group for the file.
+	
+
+
+Permissions (perms) must be a combination of the characters r, w, and x for read, write, and execute.
+If a file or directory already has an ACL, and the setfacl command is used, the additional rules are added to the existing ACL or the existing rule is modified.
+
+Example 20.1. Give read and write permissions
+
+For example, to give read and write permissions to user andrius:
+
+# setfacl -m u:andrius:rw /project/somefile
+
+
+To remove all the permissions for a user, group, or others, use the -x option and do not specify any permissions:
+
+# setfacl -x rules files
+
+
+Example 20.2. Remove all permissions
+
+For example, to remove all permissions from the user with UID 500:
+
+# setfacl -x u:500 /project/somefile
