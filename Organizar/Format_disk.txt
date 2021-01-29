@@ -1,0 +1,43 @@
+============ FORMATANDO UM DISCO
+
+fdisk nomedodisco - p ,n ,p ,1 ,enter, enter,t ,8e, w
+?
+vgcreate "nome do vg" /dev/sde1
+
+
+?lvcreate "nome do vg" -n "nome da lv" -L 50G
+
+
+mkfs.ext4 -m 0 /dev/....
+
+
+=========================
+
+
+/dev/sde
+
+
+##  1- formatar o disco
+    fdisk /dev/sde - p ,n ,p ,1 ,enter, enter,t ,8e, w
+    
+## 2- criar o vgf banco
+    vgcreate datavg /dev/sde1
+    
+## 3 - criar a lv
+    lvcreate datavg -n lv_data -L 7680G
+
+    
+## 4 - formatar
+
+mkfs.ext4 -m 0 /dev/mapper/datavg-lv_data
+
+
+##  - fstab
+    
+/dev/mapper/datavg-lv_data     /data    ext4    defaults        1 2
+
+
+## 6 - montar discos
+
+
+mount /dev/mapper/datavg-lv_data /data 
