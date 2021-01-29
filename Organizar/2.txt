@@ -1,0 +1,213 @@
+
+$ swapoff -a && swapon -a 
+
+
+===============================
+--------------- Chave Accenture OCI 
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5yXN1g3OjtFzfBOytlwWsgu5SGWEPCncGtkhc3Tkh16Y2QXk8tddLFeox+DQFLXtvrSOQoBDZTfHWpUB6GAdOul3FYcg+tyaRoYnJQ9pCq2O8QJ+JK87HMkyiurw3YLG5JgPf7g0iPAXgwMKF4YFXz0fyXD84l9l16aBOuvkrb6ioJyBUfAjaW/v2ZVSD4DLLn8zHbBKjEVZe9qYmOd+axRwkAM1k/MNLBhHacor5drs440AtbHFaQ7wVIZads+tLr4nY7/JCFiTOeOOV2oXhkBB/B55Wpf1fPlrWZ00zGLtQl+xbfJTSxroIqfdFKoKXR+soHMINosorKWap4/GD accenture_oci
+===============================
+
+=============
+efetar remount do / com permissão de leitura e escrita 
+mount -o remount,rw /
+
+=============
+
+=============
+[08:23] Daniel Sousa Costa
+    Pra criar o diretorio
+mkdir -p /etc/opt/vmware
+
+Setar permissao
+chown skyowner.sasapp   /etc/opt/vmware
+ 
+
+​[08:23] Daniel Sousa Costa
+    
+chown - change onwner
+usuario.grupo
+
+Editada
+
+
+=============
+----- Ler Sudoers removendo espaços em branco e comentários
+sudo cat /etc/sudoers | grep -Ev '[:blank]*#|^[:blank]*$'
+sudo cat /etc/fstab | grep -Ev '[:blank]*#|^[:blank]*$'
+=============
+
+===================
+
+ex: como criar grupo e usuario (escolhendo os id´s)
+groupadd -g 10000 jnkns
+useradd -u 10001 -g 10000 -d /export/home/jnkns_hl -s /bin/bash -c "DevOps - Jenkins" -m jnkns_hl
+
+[08:32] Daniel Sousa Costa
+    
+grupo: jnkns id 10000
+
+usuario: jnkns_hl id 10001 no grupo 10000 
+
+
+=============== SUDOERS
+
+visudo
+## pra colocar com acesso ao sudoers sem pedir senha. so inserir no final: 
+	%Suporte                         ALL=(ALL) NOPASSWD: ALL
+	%GG_GA_SI_UNIX_ORACLE_OCI        ALL=(ALL) NOPASSWD: ALL
+	%GG_GA_DEVOPS_SO_ADM             ALL=(ALL) NOPASSWD: ALL
+	%GG_GA_IDCS_INFRA_DIGITAL_OCI    ALL=(ALL) NOPASSWD: ALL
+
+​[08:44] Daniel Sousa Costa: se for colocar usuario:
+	13842        ALL=(ALL) NOPASSWD: ALL
+
+
+===================== TIMEZONE
+
+[09:23] Daniel Sousa Costa: alterar timezone
+	timedatectl set-timezone America/Sao_Paulo
+
+Consultar:
+[root@lxcprd01owzc01 ~]# timedatectl | grep zone
+       Time zone: America/Sao_Paulo (-03, -0300)
+[root@lxcprd01owzc01 ~]#
+
+
+===================== Consultar integrantes de grupo do AD
+C:\Users\10497>net group GG_GA_DEVOPS_SO_ADM /domain
+A solicitação será processada em um controlador de domínio para o domínio sky.local.
+
+Nome de grupo     GG_GA_DEVOPS_SO_ADM
+Comentário        Grupo com permissões de acesso  administrador nas instancias de DevOps
+
+Membros
+
+-------------------------------------------------------------------------------
+wai00230
+Comando concluído com êxito.
+
+
+C:\Users\10497>net group GG_GA_IDCS_INFRA_DIGITAL_OCI /domain
+A solicitação será processada em um controlador de domínio para o domínio sky.local.
+
+Nome de grupo     GG_GA_IDCS_INFRA_DIGITAL_OCI
+Comentário        Permissões para Infra Digital
+
+Membros
+
+-------------------------------------------------------------------------------
+10497                    13381                    13842
+14370                    14375                    8316
+vnt00001
+Comando concluído com êxito.
+
+
+C:\Users\10497>
+
+==================== 
+
+
+==================== 
+--- pra descobrir alias para user AD
+C:\Users\10497>net user kvi00002 /domain
+A solicitação será processada em um controlador de domínio para o domínio sky.local.
+
+Nome de usuário                     kvi00002
+Nome completo                       Barak Gablinger
+Comentário                          Terceiro SKY
+Comentário do usuário
+Código do país                      000 (Padrão do sistema)
+Conta ativa                         Sim
+Conta expira em                     Nunca
+
+Última definição de senha           18/06/2020 03:36:56
+A senha expira                      18/06/2021 03:36:56
+Alteração de senha                  19/06/2020 03:36:56
+Senha requerida                     Sim
+O usuário pode alterar a senha      Sim
+
+Estações de trabalho permitidas     Todos
+Script de logon
+Perfil do usuário
+Pasta base
+Último logon                        16/11/2020 13:52:02
+
+Horário de logon permitido          Todos
+
+Associações de Grupo Local
+Associações de Grupo Global         *GG_GA_PROXY_DEFAULT
+                                    *CISCO_ISE_IT_DIGITAL
+                                    *Domain Users
+                                    *GG_http
+                                    *CISCO_ISE_USER
+Comando concluído com êxito.
+
+
+C:\Users\10497>
+====================
+
+
+====================
+Espaçamento em disco - listar diretorios com maior consumo: 
+
+[opc@lxcprd01odjb01 u01]$ du -ksm * | sort -n
+18028   oracle
+[opc@lxcprd01odjb01 u01]$ cd oracle/
+[opc@lxcprd01odjb01 oracle]$ du -ksm * | sort -n
+0       domain
+0       log
+1       fmw_12213_readme.htm
+32      oraInventory
+2162    wls1213_OSB
+2743    wls1213_SOA
+3120    wls1036_OSB
+3237    wls12213_OSB
+3335    wls1036_SOA
+3403    wls12213_SOA
+[opc@lxcprd01odjb01 oracle]$ ls -la
+total 44
+drwxr-xr-x. 11 opc opc 4096 Sep 27  2019 .
+drwxr-xr-x.  3 opc opc   20 Nov  6  2019 ..
+drwxr-xr-x.  2 opc opc    6 Sep 10  2019 domain
+-rw-r--r--.  1 opc opc 9063 Aug  8  2017 fmw_12213_readme.htm
+drwxr-xr-x.  2 opc opc    6 Sep 10  2019 log
+drwxrwx---.  9 opc opc 4096 Sep 27  2019 oraInventory
+drwxr-x---. 12 opc opc 4096 Oct  3  2019 wls1036_OSB
+drwxrwxr-x.  9 opc opc 4096 Sep 25  2019 wls1036_SOA
+drwxr-x---. 13 opc opc 4096 Sep 25  2019 wls1213_OSB
+drwxr-x---. 15 opc opc 4096 Sep 25  2019 wls1213_SOA
+drwxr-x---. 14 opc opc 4096 Sep 25  2019 wls12213_OSB
+drwxr-x---. 16 opc opc 4096 Sep 25  2019 wls12213_SOA
+[opc@lxcprd01odjb01 oracle]$
+====================
+
+
+====================
+--- Consultar Porta Listem Linux
+$ netstat -tulpn | grep LISTEN
+https://www.cyberciti.biz/faq/unix-linux-check-if-port-is-in-use-command/
+https://www.tecmint.com/find-listening-ports-linux/
+====================
+
+====================
+--- informações em arquivos de banner 
+[opc@lxcprd01ok2v03 ~]$ cat /etc/motd
+
+███████╗██╗  ██╗██╗   ██╗    ██████╗ ██████╗  █████╗ ███████╗██╗██╗
+██╔════╝██║ ██╔╝╚██╗ ██╔╝    ██╔══██╗██╔══██╗██╔══██╗██╔════╝██║██║
+███████╗█████╔╝  ╚████╔╝     ██████╔╝██████╔╝███████║███████╗██║██║
+╚════██║██╔═██╗   ╚██╔╝      ██╔══██╗██╔══██╗██╔══██║╚════██║██║██║
+███████║██║  ██╗   ██║       ██████╔╝██║  ██║██║  ██║███████║██║███████╗
+╚══════╝╚═╝  ╚═╝   ╚═╝       ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝
+
+
+
+[opc@lxcprd01ok2v03 ~]$ cat /etc/issue
+\S
+Kernel \r on an \m
+
+[opc@lxcprd01ok2v03 ~]$ cat /etc/issue.net
+\S
+Kernel \r on an \m
+[opc@lxcprd01ok2v03 ~]$
+====================
