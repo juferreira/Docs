@@ -1,0 +1,60 @@
+API Restful: conceito, princípios e como criar
+https://www.hostgator.com.br/blog/api-restful/
+
+Criando Um Monitor de Backup do Oracle Cloud via Python
+https://medium.com/@gusleig/criando-um-monitor-de-backup-do-oracle-cloud-via-python-304eafb7057c
+
+API Reference: 
+https://oracle-cloud-infrastructure-python-sdk.readthedocs.io/en/latest/api/landing.html
+https://oracle-cloud-infrastructure-python-sdk.readthedocs.io/en/latest/api/core/client/oci.core.BlockstorageClient.html
+
+Exemple:
+https://docs.oracle.com/en-us/iaas/tools/python-sdk-examples/2.26.0/core/list_volume_backups.py.html
+
+Doc OCI CLI:
+https://docs.oracle.com/en-us/iaas/tools/oci-cli/2.17.0/oci_cli_docs/cmdref/bv/backup/list.html
+
+Doc Block Volume:
+https://docs.oracle.com/en-us/iaas/Content/Block/Concepts/overview.htm#Overview_of_Block_Volume
+
+Doc Rest APIs OCI: 
+https://docs.oracle.com/en-us/iaas/Content/API/Concepts/usingapi.htm#REST_APIs
+
+Doc Rest APIs OCI: Request Signatures
+https://docs.oracle.com/en-us/iaas/Content/API/Concepts/signingrequests.htm#seven__Python
+
+Doc Rest APIs OCI: Required Keys and OCIDs
+https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm#Required_Keys_and_OCIDs
+
+Doc Rest APIs OCI:ListBootVolumeBackups
+https://docs.oracle.com/en-us/iaas/api/#/en/iaas/20160918/BootVolumeBackup/ListBootVolumeBackups
+
+How to use OpenSSL: Hashes, digital signatures, and more:
+https://opensource.com/article/19/6/cryptography-basics-openssl-part-2
+
+Oracle Cloud Infrastructure (OCI) REST call walkthrough with curl
+https://www.ateam-oracle.com/oracle-cloud-infrastructure-oci-rest-call-walkthrough-with-curl
+
+--------
+OCI: 
+oci-curl iaas.sa-saopaulo-1.oraclecloud.com get "/20160918/bootVolumeBackups?compartmentId=ocid1.compartment.oc1..aaaaaaaab5gdhyy6hv4plwnod42h3gdygcn77gfep7j6ptr74272m4wlmoka"
+
+
+gera_curl_api.sh oci-curl iaas.sa-saopaulo-1.oraclecloud.com get "/20160918/bootVolumeBackups?compartmentId=ocid1.compartment.oc1..aaaaaaaab5gdhyy6hv4plwnod42h3gdygcn77gfep7j6ptr74272m4wlmoka"
+
+Lista todos os backups com falha na data setada: 
+./api_ListBootVolumeBackups.sh | jq -c '.[] | select( .timeCreated | contains("2021-01-16"))' | jq
+./api_ListVolumeBackups.sh | jq -c '.[] | select( .timeCreated | contains("2021-01-13"))' | jq
+
+./api_ListBackups_database.sh | jq -c '.[] | select( .timeStarted | contains("2021-01-15"))' | jq
+
+
+./api_ListAutonomousDatabaseBackups.sh | jq -c '.[] | select( .timeStarted | contains("2021-01-15"))' | jq
+
+
+Autonomous: 
+./ListBackupsFailed.sh | jq -c '.[] | select( .timeStarted | contains("2021-01-26"))' | jq
+./ListBackupsFailed.sh | jq -c '.[] | select( .lifecycleState | contains("FAILED"))' | jq
+
+./ListBackus.sh | jq -c '.[] | select( .lifecycleState | contains("FAIL"))' | jq
+./ListMaintenaceRunsDatabase.sh | jq -c '.[] | select( .lifecycleState | contains("IN_PROGRESS"))' | jq
