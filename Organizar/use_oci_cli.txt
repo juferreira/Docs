@@ -1,0 +1,14 @@
+=====================================================
+https://docs.cloud.oracle.com/pt-br/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput 
+oci bv volume-group update --volume-group-id [ocid1.volumegroup.oc1.sa-saopaulo-1.abtxeljrviywro7clvyfs25olidzpyjovpfdiwus3o64oydrhaw4dai2ktyq] --defined-tags file://C:\Users\10497\Documents\OCI\CLI\tag_infra
+
+file://C:\path\to\testfile.json
+
+
+oci bv volume-group update --volume-group-id [ocid1.volumegroup.oc1.sa-saopaulo-1.abtxeljrviywro7clvyfs25olidzpyjovpfdiwus3o64oydrhaw4dai2ktyq] --defined-tags file:///tmp/tag_infra
+
+
+
+oci bv volume-group update --volume-group-id ocid1.volumegroup.oc1.sa-saopaulo-1.abtxeljrviywro7clvyfs25olidzpyjovpfdiwus3o64oydrhaw4dai2ktyq --defined-tags file:///tmp/tag_infra
+
+=====================================================
